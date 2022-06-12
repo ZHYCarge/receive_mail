@@ -43,9 +43,9 @@ elif mail_box['log_level'] == 'DEBUG':
 mailbox = []
 for a in box_list:
     mailbox.append(box_list[a])
-principal = []
+principals = []
 for a in principal:
-    principal.append(principal[a])
+    principals.append(principal[a])
 
 
 # 获得邮件主题（返回邮件主题【str】）
@@ -132,7 +132,8 @@ def mail_Seach(conn):
                 message = email.message_from_string(text)  # 转换为email.message对象
                 title = Get_title(message)
                 logging.info(f'获取到主题为【{title}】的邮件')
-                if title.split('-')[3] in principal:
+                print(title.split('-')[3])
+                if title.split('-')[3] in principals:
                     logging.debug('邮件符合配置材料负责人，进行尝试下载附件')
                     locate = title.split('-')[2]
                     Get_file(message,locate)
