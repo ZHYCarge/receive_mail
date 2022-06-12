@@ -118,9 +118,9 @@ def BoxList(conn):
 
 # 邮件搜索
 def mail_Seach(conn):
-    for mail_box in mailbox:
-        conn.select(mailbox=mail_box,readonly=False)    # True表示只读取文件，Flase 表示可以对邮件进行更改
-        typ,num = conn.search(None,'UNSEEN') # UNSEEN 表示邮件未读 SEEN表示邮件已读  ALL代表全部
+    for mail_boxs in mailbox:
+        conn.select(mailbox=mail_boxs,readonly=False)    # True表示只读取文件，Flase 表示可以对邮件进行更改
+        typ,num = conn.search(None,mail_box['read_mail']) # UNSEEN 表示邮件未读 SEEN表示邮件已读  ALL代表全部
         if typ == 'OK':
             logging.info("成功搜索到邮箱文件夹内信息")
         else:
@@ -132,7 +132,6 @@ def mail_Seach(conn):
                 message = email.message_from_string(text)  # 转换为email.message对象
                 title = Get_title(message)
                 logging.info(f'获取到主题为【{title}】的邮件')
-                print(title.split('-')[3])
                 if title.split('-')[3] in principals:
                     logging.debug('邮件符合配置材料负责人，进行尝试下载附件')
                     locate = title.split('-')[2]
